@@ -3,50 +3,44 @@ const bcrypt = require('bcryptjs');
 const jwt = require('../utils/jwt');
 const User = require('../models/User');
 
-exports.login = (req, res) => {
+exports.login = async (req, res) => {
   const { username, password } = req.body;
-
-  User.findByUsername(username, (err, user) => {
-    if (err || !user) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+  console.log(username)
+  try {
+    const user = await User.findByUsername(username);
+    console.log(user);
+    if (!user) {
+      
+      return res.status(401).json({ message: 'Invalid credentials 1' });
     }
 
-    bcrypt.compare(password, user.password, (err, result) => {
-      if (err || !result) {
-        return res.status(401).json({ message: 'Invalid credentials' });
-      }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Invalid credentials 2' });
+    }
 
-      const token = jwt(user);
-      res.cookie('token', token, { httpOnly: true }).json({ message: 'Login successful' });
-    });
-  });
+    const token = jwt(user);
+    res.cookie('token', token, { httpOnly: true, expires: new Date(Date.now() + 86400000) }).json({token:token, message: 'Login successful' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 };
 
-exports.signup = (req, res) => {
+exports.signup = async (req, res) => {
   const { username, password } = req.body;
-
-  // Check if username is already taken
-  User.findByUsername(username, (err, user) => {
-    if (err) {
-      return res.status(500).json({ message: 'Internal Server Error' });
-    }
-    if (user) {
+  try {
+    const existingUser = await User.findByUsername(username);
+    if (existingUser) {
       return res.status(400).json({ message: 'Username already exists' });
     }
 
-    // Hash the password
-    bcrypt.hash(password, 10, (err, hashedPassword) => {
-      if (err) {
-        return res.status(500).json({ message: 'Internal Server Error' });
-      }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await User.create({ username, password: hashedPassword });
 
-      // Create the user
-      User.create({ username, password: hashedPassword }, (err, result) => {
-        if (err) {
-          return res.status(500).json({ message: 'Internal Server Error' });
-        }
-        res.json({ message: 'User registered successfully' });
-      });
-    });
-  });
+    res.json({ message: 'User registered successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 };

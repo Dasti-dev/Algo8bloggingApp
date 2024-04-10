@@ -26,7 +26,7 @@ exports.createBlog = (req, res) => {
 
   Blog.create(data, (err, result) => {
     if (err) {
-      return res.status(500).json({ message: 'Internal Server Error' });
+      return res.status(500).json({ err:err ,message: 'Internal Server Error x' });
     }
     res.json({ message: 'Blog created successfully', id: result.insertId });
   });
@@ -38,7 +38,7 @@ exports.updateBlog = (req, res) => {
 
   Blog.update(id, data, (err, result) => {
     if (err) {
-      return res.status(500).json({ message: 'Internal Server Error' });
+      return res.status(500).json({ message: 'Internal Server Error y' });
     }
     res.json({ message: 'Blog updated successfully' });
   });
