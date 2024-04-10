@@ -1,0 +1,99 @@
+openapi: 3.0.0
+info:
+  title: Blogging Site API
+  version: 1.0.0
+  description: API documentation for the Blogging Site Backend
+  contact:
+    name: Your Name
+    email: your.email@example.com
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User registered successfully
+        '400':
+          description: Bad request
+  /auth/login:
+    post:
+      summary: Log in with username and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '401':
+          description: Unauthorized
+  /blogs:
+    get:
+      summary: Get all blogs
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Blog'
+    post:
+      summary: Create a new blog
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Blog'
+      responses:
+        '200':
+          description: Blog created successfully
+        '401':
+          description: Unauthorized
+components:
+  schemas:
+    Blog:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        content:
+          type: string
+      required:
+        - title
+        - content
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
