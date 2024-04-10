@@ -21,3 +21,32 @@ exports.login = (req, res) => {
     });
   });
 };
+
+exports.signup = (req, res) => {
+  const { username, password } = req.body;
+
+  // Check if username is already taken
+  User.findByUsername(username, (err, user) => {
+    if (err) {
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+    if (user) {
+      return res.status(400).json({ message: 'Username already exists' });
+    }
+
+    // Hash the password
+    bcrypt.hash(password, 10, (err, hashedPassword) => {
+      if (err) {
+        return res.status(500).json({ message: 'Internal Server Error' });
+      }
+
+      // Create the user
+      User.create({ username, password: hashedPassword }, (err, result) => {
+        if (err) {
+          return res.status(500).json({ message: 'Internal Server Error' });
+        }
+        res.json({ message: 'User registered successfully' });
+      });
+    });
+  });
+};
