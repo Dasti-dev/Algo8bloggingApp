@@ -81,6 +81,13 @@ paths:
           description: Unauthorized
 components:
   schemas:
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
     Blog:
       type: object
       properties:
@@ -90,10 +97,8 @@ components:
           type: string
         content:
           type: string
+        publisher:
+          type: integer
       required:
         - title
         - content
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
