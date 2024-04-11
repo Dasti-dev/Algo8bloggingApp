@@ -57,6 +57,7 @@ API documentation is available in the Swagger/OpenAPI specification file: [swagg
 
 ## Start Mysql Server 
 
+```
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) UNIQUE NOT NULL,
@@ -67,3 +68,4 @@ CREATE TABLE blogs (
     id INT AUTO_INCREMENT PRIMARY KEY,
     content TEXT NOT NULL
 );
+```
