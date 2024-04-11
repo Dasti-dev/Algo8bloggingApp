@@ -6,7 +6,7 @@ exports.getAllBlogs = (req, res) => {
     if (err) {
       return res.status(500).json({ message: 'Internal Server Error' });
     }
-    res.json(blogs);
+    return res.json(blogs);
   });
 };
 
@@ -17,18 +17,20 @@ exports.getBlogById = (req, res) => {
     if (err || !blog) {
       return res.status(404).json({ message: 'Blog not found' });
     }
-    res.json(blog);
+    return res.json(blog);
   });
 };
 
 exports.createBlog = (req, res) => {
   const data = req.body;
+  console.log('Reached in reate func')
 
   Blog.create(data, (err, result) => {
     if (err) {
       return res.status(500).json({ err:err ,message: 'Internal Server Error x' });
     }
-    res.json({ message: 'Blog created successfully', id: result.insertId });
+    console.log('reached respnse object')
+    return res.json({ message: 'Blog created successfully', id: result.insertId });
   });
 };
 
@@ -40,7 +42,7 @@ exports.updateBlog = (req, res) => {
     if (err) {
       return res.status(500).json({ message: 'Internal Server Error y' });
     }
-    res.json({ message: 'Blog updated successfully' });
+    return res.json({ message: 'Blog updated successfully' });
   });
 };
 

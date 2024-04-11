@@ -8,16 +8,18 @@ const authMiddleware = (req, res, next) => {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
-  // jwt.verify(token, 'secret_key', (err, decoded) => {
-  //   console.log(token)
-  //   if (err) {
-  //     return res.status(401).json({ message: 'Invalid token' });
-  //   }
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    console.log(token)
+    
+    if (err) {
+      console.log(err)
+      return res.status(401).json({ message: 'Invalid token' });
+    }
 
-  //   req.user = decoded;
-  //   next();
-  // });
-  next();
+    req.user = decoded;
+    next();
+  });
+  // next();
 };
 
 module.exports = authMiddleware;
