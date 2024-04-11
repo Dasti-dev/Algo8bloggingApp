@@ -30,11 +30,11 @@ The project follows the following structure:
 
 3. Create a `.env` file in the root directory and define the following environment variables:
 
-`DB_HOST=localhost`
-`DB_USER=root`
-`DB_PASSWORD=password`
-`DB_DATABASE=blog_db`
-`JWT_SECRET=your_secret_key`
+- `DB_HOST=localhost`
+- `DB_USER=root`
+- `DB_PASSWORD=password`
+- `DB_DATABASE=blog_db`
+- `JWT_SECRET=your_secret_key`
 
 
 4. Set up your MySQL database according to the configurations.
