@@ -1,4 +1,3 @@
-// index.js
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -14,7 +13,6 @@ app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.json());
 
-// Parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/auth', authRoutes);
@@ -34,4 +32,4 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-module.exports = app; // For testing
+module.exports = app; 

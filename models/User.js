@@ -7,7 +7,7 @@ class User {
         if (err) {
           reject(err);
         } else {
-          resolve(rows[0]); // Assuming username is unique, so returning only the first row
+          resolve(rows[0]); 
         }
       });
     });

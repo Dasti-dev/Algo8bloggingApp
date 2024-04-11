@@ -1,4 +1,3 @@
-// controllers/blogController.js
 const Blog = require('../models/Blog');
 
 exports.getAllBlogs = (req, res) => {

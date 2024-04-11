@@ -1,7 +1,7 @@
 {
   "name": "algo-8",
   "version": "1.0.0",
-  "description": "",
+  "description": "Blogging site for Algo8 Assignment",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",

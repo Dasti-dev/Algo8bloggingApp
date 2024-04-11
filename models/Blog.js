@@ -1,4 +1,3 @@
-// models/Blog.js
 const db = require('../config/db');
 
 class Blog {

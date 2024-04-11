@@ -54,3 +54,16 @@ The project follows the following structure:
 ## API Documentation
 
 API documentation is available in the Swagger/OpenAPI specification file: [swagger.yaml](./swagger.yaml).
+
+## Start Mysql Server 
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE blogs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    content TEXT NOT NULL
+);
